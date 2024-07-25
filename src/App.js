@@ -1,30 +1,25 @@
-import { memo } from "react";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import { memo, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./app.css";
-
-const conceptsArray = [
-  {
-    conceptName: "Error Boundaries",
-    style: {
-      color: "red",
-      borderColor: "red",
-    },
-  },
-];
+import ErrorBoundaries from "./modules/ErrorBoundaries";
+import Concepts from "./modules/Concepts";
 
 const App = () => {
+  useEffect(() => {
+    const currentUrl = window.location.pathname;
+    if (currentUrl === "/") window.open("/concepts", "_self");
+  }, []);
+
   return (
-    <Grid container columnGap={2} sx={{ padding: 3 }}>
-      {conceptsArray?.map(({ conceptName, style }) => (
-        <Grid item>
-          <Button variant="outlined" sx={{ ...style }}>
-            {conceptName}
-          </Button>
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/concepts" element={<Concepts />} />
+          <Route exact path="/error-boundaries" element={<ErrorBoundaries />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
 
